@@ -1,6 +1,6 @@
-package com.automationqa.utilities.test;
+package com.automationqa.test;
 
-import com.automationqa.BaseClass;
+import com.automationqa.utilities.DriverUtil.*;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,14 +9,16 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
+import static com.automationqa.BaseClass.*;
+
 
 public class Login {
 
-    WebDriver driver;
+    WebDriver localDriver;
 
-    public Login(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver,this);
+    public Login(WebDriver remoteDriver) {
+        this.localDriver=remoteDriver;
+        PageFactory.initElements(localDriver, this);
     }
 
     @FindBy(xpath = "//span[text()='Hello, sign in']")
@@ -36,6 +38,7 @@ public class Login {
 
 
     public void TC001_User_LoggedInConfirmation_Test(String emailId, String password) throws InterruptedException {
+        Thread.sleep(3000);
         signInButton.click();
         Thread.sleep(3000);
         userIdTextBox.sendKeys(emailId);
