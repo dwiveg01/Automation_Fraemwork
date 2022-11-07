@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 public class PageObjectManager {
 
-    private WebDriver localDriver;
+    private final WebDriver localDriver;
     private LoginPage loginPage;
     private HomePage homePage;
 
