@@ -35,6 +35,7 @@ public class BaseClass {
         driver.get(baseURL);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(waitTimeOut));
         objectInitializer();
+
     }
 
     public void objectInitializer() {
