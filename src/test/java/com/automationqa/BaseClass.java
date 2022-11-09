@@ -4,19 +4,11 @@ import com.automationqa.managers.PageObjectManager;
 import com.automationqa.pageObjects.HomePage;
 import com.automationqa.pageObjects.LoginPage;
 import com.automationqa.utilities.DriverUtil;
-import io.github.bonigarcia.wdm.WebDriverManager;
-
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.*;
-
-import java.sql.Driver;
 import java.time.Duration;
+import static com.automationqa.utilities.PropertyUtil.*;
 
-import static com.automationqa.utilities.ConfigUtil.*;
-import static com.automationqa.utilities.DriverUtil.*;
 
 
 public class BaseClass {
@@ -28,30 +20,31 @@ public class BaseClass {
     public LoginPage loginPage;
 
 
-    public static String baseURL = getConfig("baseURL");
-    public static int waitTimeOut = Integer.parseInt(getConfig("waitTimeOut"));
-    public static String browser = getConfig("browser");
-    public static String userID = getConfig("userId");
-    public static String password = getConfig("password");
+    public static String baseURL = getProperty("baseURL");
+    public static int waitTimeOut = Integer.parseInt(getProperty("waitTimeOut"));
+    public static String browser = getProperty("browser");
+    public static String userID = getProperty("userId");
+    public static String password = getProperty("password");
 
 
-    @BeforeTest
+    PageObjectManager objectManager;
+    @BeforeMethod
     public void setUp() {
         DriverUtil driverUtil = new DriverUtil();
         driverUtil.instantiateDriver();
-        objectInitializer();
         driver.get(baseURL);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(waitTimeOut));
+        objectInitializer();
     }
 
     public void objectInitializer() {
-        PageObjectManager objectManager = new PageObjectManager(driver);
+        objectManager = new PageObjectManager();
         loginPage = objectManager.loginPage();
         homePage = objectManager.homePage();
 
     }
 
-    @AfterTest
+    @AfterMethod
     public static void tearDown() throws InterruptedException {
         driver.quit();
 
