@@ -16,6 +16,7 @@ public class BaseClass {
     public static WebDriver driver;
 
 
+
     public HomePage homePage;
     public LoginPage loginPage;
 
@@ -35,7 +36,6 @@ public class BaseClass {
         driver.get(baseURL);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(waitTimeOut));
         objectInitializer();
-
     }
 
     public void objectInitializer() {
