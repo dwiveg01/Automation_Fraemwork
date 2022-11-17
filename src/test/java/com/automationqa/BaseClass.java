@@ -4,17 +4,26 @@ import com.automationqa.managers.PageObjectManager;
 import com.automationqa.pageObjects.HomePage;
 import com.automationqa.pageObjects.LoginPage;
 import com.automationqa.utilities.DriverUtil;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
-import java.time.Duration;
-import static com.automationqa.utilities.PropertyUtil.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.List;
+
+import static com.automationqa.utilities.PropertyUtil.*;
 
 
 public class BaseClass {
 
     public static WebDriver driver;
-
 
 
     public HomePage homePage;
@@ -24,11 +33,12 @@ public class BaseClass {
     public static String baseURL = getProperty("baseURL");
     public static int waitTimeOut = Integer.parseInt(getProperty("waitTimeOut"));
     public static String browser = getProperty("browser");
-    public static String userID = getProperty("userId");
-    public static String password = getProperty("password");
+   // public static String userID = getProperty("userId");
+   // public static String password = getProperty("password");
 
 
     PageObjectManager objectManager;
+
     @BeforeMethod
     public void setUp() {
         DriverUtil driverUtil = new DriverUtil();
@@ -47,7 +57,21 @@ public class BaseClass {
 
     @AfterMethod
     public static void tearDown() throws InterruptedException {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
+
+    }
+
+
+    public List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException {
+
+        String jsonContent = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
+        ObjectMapper mapper = new ObjectMapper();
+        List<HashMap<String, String>> data = mapper.readValue(jsonContent, new TypeReference<List<HashMap<String, String>>>() {
+
+        });
+        return data;
 
 
     }
