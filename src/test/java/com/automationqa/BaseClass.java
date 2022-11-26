@@ -12,6 +12,7 @@ import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -35,6 +36,7 @@ public class BaseClass {
     public static String browser = getProperty("browser");
    // public static String userID = getProperty("userId");
    // public static String password = getProperty("password");
+   // public static String testDataPath="src/test/java/com/automationqa/testData/.*";
 
 
     PageObjectManager objectManager;
